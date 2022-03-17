@@ -1,0 +1,14 @@
+{
+  "name": "ghost-code-challenge",
+  "version": "0.1.0",
+  "description": "discussion page",
+  "main": "index.js",
+  "scripts": {
+    "serve": "node index.js"
+  },
+  "author": "yash ghantala",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
