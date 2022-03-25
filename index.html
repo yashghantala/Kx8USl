@@ -14,8 +14,30 @@
 </head>
 
 <body>
+    <div class="users-selection card">
+        <div class="title">Choose User:</div>
+        <div class="content">
+            <input type="radio" checked name="user_id" id="one" value="1">
+            <input type="radio" name="user_id" id="two" value="2">
+
+            <label for="one" class="box first">
+                <div class="plan">
+                    <span class="circle"></span>
+                    <span class="yearly">User 1</span>
+                </div>
+            </label>
+            <label for="two" class="box second">
+                <div class="plan">
+                    <span class="circle"></span>
+                    <span class="yearly">User 2</span>
+                </div>
+            </label>
+        </div>
+    </div>
+
     <div class="main">
         <div class="container">
+
             <div class="title-heading">
                 <span>Discussion</span>
             </div>
@@ -27,9 +49,10 @@
             </div>
 
             <div class="divider-line"></div>
-            <div class="comments">
+
+            <div class="comments d-none">
                 <div class="comment-list">
-                    <div class="comment">
+                    <div class="comment" data-comment-id="id">
                         <div class="user-profile">
                             <img class="img-avatar" src="./public/images/avatar.png" alt="user avatar">
                             <div></div>
@@ -45,15 +68,23 @@
                                 Adipisicing velit sint et aliquip officia cupidatat minim est.
                             </div>
                             <div class="comment-options">
-                                <span class="comment-upvote"><i class="fa-solid fa-circle-up"></i> Upvote</span>
+                                <span class="comment-upvote"><i class="fa-solid fa-circle-up"></i>
+                                    <span class="upvote-text">upvote</span></span>
                                 <span class="comment-reply">Reply</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="loading">
+                loading comments...
+            </div>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./public/js/index.js"></script>
 </body>
 
 </html>
