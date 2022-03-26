@@ -1,7 +1,6 @@
 const connection = require('../database/db')
 
 exports.upvoteComment = function (req, res) {
-
     connection
         .query(`select count(*) > 0 as upvoted from upvotes where userId=${req.body.user_id} and commentId=${req.body.comment_id};`,
             function (err, results, fields) {

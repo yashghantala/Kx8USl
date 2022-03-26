@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { query, body, validationResult, check } = require('express-validator')
+const cors = require('cors')
 const path = require('path')
 //Controllers
 const comment = require('../controllers/commentController')
@@ -12,6 +13,9 @@ const failValidation = function (req, res, next) {
     }
     next()
 }
+
+//enable cors
+router.use(cors())
 
 // Request body parsing
 router.use(express.urlencoded({
