@@ -55,8 +55,9 @@ function Comment({ comment }) {
                 </div>
                 <div className="comment-options">
                     <span onClick={() => { upvoteComment(comment.id) }} className={"comment-upvote" + (comment.upvoted ? " upvoted" : '')}><i className="fa-solid fa-circle-up"></i>
-                        <span className="upvote-text"> {comment.upvoted == true ? "upvoted" : 'upvote'} </span></span>
+                        <span className="upvote-text"> {comment.upvoted == true ? "upvoted" : 'upvote'}</span></span>
                     <span className="comment-reply">Reply</span>
+                    <span className="comment-reply">Upvotes:{" " + comment.total_upvotes}</span>
                 </div>
             </div>
         </div >

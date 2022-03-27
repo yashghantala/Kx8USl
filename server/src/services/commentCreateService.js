@@ -1,6 +1,6 @@
 const connection = require('../database/db')
 
-exports.createComment = function (req, res) {
+let createComment = function (req, res) {
     connection.query(`insert into comments (comment,userId) values('${req.body.comment}',${req.body.user_id})`,
         function (err, results, fields) {
             if (results.insertId > 0) {
@@ -21,3 +21,5 @@ exports.createComment = function (req, res) {
             }
         })
 }
+
+exports.createComment = createComment
