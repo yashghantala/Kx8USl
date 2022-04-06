@@ -91,7 +91,7 @@ body {
   border-radius: 100px;
 }
 
-textarea {
+textarea[name="comment"] {
   font-size: 24px;
   outline: none;
   padding: 8px 10px;
@@ -102,9 +102,14 @@ textarea {
   resize: none;
 }
 
-textarea:focus {
+textarea[name="comment"]:focus {
   box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.2);
   outline: 0;
+}
+
+textarea[name="reply"] {
+  font-size: 20px;
+  flex: 1;
 }
 
 .submit-comment {
@@ -118,6 +123,18 @@ textarea:focus {
   height: 40px;
   box-shadow: inset -4px -4px 4px 0px rgb(100 15 236);
 }
+.submit-comment.reply {
+  font-weight: bold;
+  font-size: 15px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border: none;
+  color: white;
+  background-color: rgb(126, 52, 246);
+  border-radius: 8px;
+  height: 35px;
+  box-shadow: inset -4px -4px 4px 0px rgb(100 15 236);
+}
 
 .submit-comment:active {
   box-shadow: inset 0px 0px 4px 0px rgb(100 15 236);
@@ -129,9 +146,6 @@ textarea:focus {
   margin-top: 20px;
   height: 100%;
   border-radius: 8px;
-}
-
-.comment-list {
 }
 
 .comment-list > .comment {
@@ -158,6 +172,7 @@ textarea:focus {
 }
 
 .user-comment-details {
+  flex: 1;
   margin-left: 15px;
 }
 
@@ -175,10 +190,24 @@ textarea:focus {
   align-items: center;
 }
 
-.comment.has-reply .user-profile > div {
+.comment.has-reply>.user-profile > div {
   height: 100%;
   overflow: hidden;
   border-left: 4px solid rgb(234, 234, 234);
+}
+.comment-reply.open {
+  color: green;
+}
+
+.reply-box {
+  display: flex;
+  justify-content: ;
+  margin-top: 15px;
+  margin-right: 10px;
+}
+
+.reply-box > * {
+  margin-right: 10px;
 }
 
 .comment > .user-profile {
@@ -205,6 +234,11 @@ textarea:focus {
 
 .comment-reply {
   margin-left: 15px;
+}
+
+.comment.reply {
+  display: flex;
+  margin-top: 15px;
 }
 
 .users-selection {

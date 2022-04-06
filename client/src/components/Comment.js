@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../contexts/AppContext";
 
 function timeDifference(current, previous) {
@@ -36,11 +36,30 @@ function timeDifference(current, previous) {
     }
 }
 
-function Comment({ comment }) {
-    const { upvoteComment } = useContext(AppContext)
+
+function Comment({ comment, reply = false }) {
+    const { upvoteComment, createComment } = useContext(AppContext)
+    const [replybox, setReplybox] = useState(false)
+    const [cmt, setCmt] = useState('')
+
+    let submitCheck = function (e) {
+        if (e.keyCode === 13) {
+            e.preventDefault()
+            submitForm()
+        }
+    }
+
+    let submitForm = async function () {
+        if (cmt == "") {
+            return false
+        }
+        setReplybox(false)
+        await createComment(cmt, comment.id)
+        setCmt("")
+    }
 
     return (
-        <div className="comment" data-comment-id="id">
+        <div className={"comment" + (reply ? " reply" : "") + (!reply && comment.replies.length > 0 ? " has-reply" : "")}>
             <div className="user-profile">
                 <img className="img-avatar" src={process.env.PUBLIC_URL + "/images/avatar.png"} alt="user avatar" />
                 <div></div>
@@ -54,13 +73,30 @@ function Comment({ comment }) {
                     {comment.comment}
                 </div>
                 <div className="comment-options">
-                    <span onClick={() => { upvoteComment(comment.id) }} className={"comment-upvote" + (comment.upvoted ? " upvoted" : '')}><i className="fa-solid fa-circle-up"></i>
-                        <span className="upvote-text"> {comment.upvoted == true ? "upvoted" : 'upvote'}</span></span>
-                    <span className="comment-reply">Reply</span>
+                    <span onClick={() => { upvoteComment(comment.id) }} className={"comment-upvote" + (comment.upvoted ? " upvoted" : '')}>
+                        <i className="fa-solid fa-circle-up"></i>
+                        <span className="upvote-text"> {comment.upvoted == true ? "upvoted" : 'upvote'}</span>
+                    </span>
+
+                    {!reply && <span onClick={() => { setReplybox(!replybox) }} className={"comment-reply" + (replybox ? " open" : "")}>Reply</span>}
+
                     <span className="comment-reply">Upvotes:{" " + comment.total_upvotes}</span>
                 </div>
+                {
+                    replybox && <div className="reply-box">
+                        <textarea value={cmt} onChange={(e) => { setCmt(e.target.value) }} onKeyDown={submitCheck} name="reply" placeholder="Write Reply here!" />
+                        <button onClick={submitForm} className="submit-comment reply">Reply</button>
+                    </div>
+                }
+                <div className="replies">
+                    {
+                        !reply && comment.replies.slice(0).reverse().map((reply) => {
+                            return <Comment key={reply.id} reply={true} comment={reply} />
+                        })
+                    }
+                </div>
             </div>
-        </div >
+        </div>
     )
 }
 

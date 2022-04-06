@@ -26,20 +26,9 @@ function App() {
         comment_id: comment_id
       })
     })
-    // .then(res => {
-    //   return res.json()
-    // }).then(res => {
-    //   let upvoted = comments.map((comment) => {
-    //     if (comment.id == res.comment_id) {
-    //       comment.upvoted = res.upvoted
-    //     }
-    //     return comment
-    //   })
-    //   setComments(upvoted)
-    // })
   }
 
-  let createComment = async function (comment) {
+  let createComment = async function (comment, commentId = null) {
     await fetch(serverUrl + "/comments/create", {
       headers: {
         'Content-Type': 'application/json'
@@ -47,37 +36,22 @@ function App() {
       method: "POST",
       body: JSON.stringify({
         user_id: user,
-        comment: comment
+        comment: comment,
+        comment_id: commentId
       })
     }).then(res => {
       return res.json()
     }).then(res => {
-      setComments([...comments, res[0]])
+      fetchComments()
     })
     return false
   }
 
   let upvote = useCallback((upvote) => {
+    fetchComments()
+  }, [])
 
-    let cmt = comments.map((comment) => {
-      if (comment.id == upvote.comment_id) {
-        if (upvote.user_id == user) {
-          comment.upvoted = upvote.upvoted
-        }
-        if (upvote.upvoted) {
-          comment.total_upvotes += 1
-        } else {
-          comment.total_upvotes -= 1
-        }
-      }
-      return comment
-    })
-
-    setComments(cmt)
-
-  }, [comments, user])
-
-  useEffect(function () {
+  function fetchComments() {
     fetch(serverUrl + "/comments/get?user_id=" + user).then(function (res) {
       return res.json()
     }).then(function (res) {
@@ -85,6 +59,10 @@ function App() {
     }).then(() => {
       setLoading(false)
     })
+  }
+
+  useEffect(function () {
+    fetchComments()
   }, [user, serverUrl])
 
   useEffect(() => {
